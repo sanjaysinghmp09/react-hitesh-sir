@@ -1,25 +1,18 @@
-function debounce(func, delay) {
-  let timeoutId;
+import { useEffect } from "react";
 
-  return function (...args) {
-    clearTimeout(timeoutId);
+function Timer() {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("Running...");
+    }, 1000);
 
-    timeoutId = setTimeout(() => {
-      func.apply(this, args);
-    }, delay);
-  };
+    return () => {
+      clearInterval(interval);
+      console.log("Cleanup done");
+    };
+  }, []);
+
+  return <h1>Timer Running</h1>;
 }
 
-// Example usage:
-function search(query) {
-  console.log("Searching for:", query);
-}
-
-const debouncedSearch = debounce(search, 1000);
-
-// Simulate typing
-debouncedSearch("h");
-debouncedSearch("he");
-debouncedSearch("hel");
-debouncedSearch("hell");
-debouncedSearch("hello"); // Only this will run after 1 sec
+export default Timer;
